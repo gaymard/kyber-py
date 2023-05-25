@@ -1,3 +1,6 @@
+# modif virg
+
+
 def bytes_to_bits(input_bytes):
     """
     Convert bytes to an array of bits
