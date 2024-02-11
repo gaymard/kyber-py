@@ -1,5 +1,6 @@
 import os
 import logging
+from binascii import hexlify
 from hashlib import sha3_256, sha3_512, shake_128, shake_256
 from polynomials import *
 from modules import *
@@ -177,7 +178,7 @@ class Kyber:
         
         # Generate the matrix A ∈ R^kxk
         A = self._generate_matrix_from_seed(rho, is_ntt=True)
-        logging.debug(f"A: {A}")
+        # logging.debug(f"A: {A}")
         
         # Generate the error vector s ∈ R^k
         s, N = self._generate_error_vector(sigma, self.eta_1, N)
@@ -216,11 +217,16 @@ class Kyber:
         N = 0
         rho = pk[-32:]
         
-        tt = self.M.decode(pk, 1, self.k, l=12, is_ntt=True)        
+        tt = self.M.decode(pk, 1, self.k, l=12, is_ntt=True)
+
         
         # Encode message as polynomial
         m_poly = self.R.decode(m, l=1).decompress(1)
         
+        logging.debug(f"message: {hexlify(m)}")  
+        logging.debug(f"message decoded: {self.R.decode(m, l=1)}") 
+        logging.debug(f"message decompressed: {m_poly}") 
+
         # Generate the matrix A^T ∈ R^(kxk)
         At = self._generate_matrix_from_seed(rho, transpose=True, is_ntt=True)
         
