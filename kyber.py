@@ -1,4 +1,5 @@
 import os
+import logging
 from hashlib import sha3_256, sha3_512, shake_128, shake_256
 from polynomials import *
 from modules import *
