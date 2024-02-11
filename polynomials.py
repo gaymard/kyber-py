@@ -1,5 +1,6 @@
 import random
 from utils import *
+from ascii_graph import Pyasciigraph
 
 class PolynomialRing:
     """
@@ -332,6 +333,25 @@ class PolynomialRing:
                 return "0" + ntt_info
 
             info = []
+            
+            histogram = True
+            if histogram:
+                histodata = []
+                for i in sorted(set(self.coeffs)):
+                    histodata.append((f"{i}", self.coeffs.count(i)))
+
+                graph = Pyasciigraph(line_length=40,
+                                    #  graphsymbol='-',
+                                     )
+
+                info.append("\r\n")
+                for line in graph.graph(None, histodata):
+                    info.append(line)
+                    info.append("\n")
+                info.append("\r\n")
+
+                return "".join(info) + ntt_info
+            
             for i,c in enumerate(self.coeffs):
                 if c != 0:
                     if i == 0:
