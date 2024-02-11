@@ -179,10 +179,12 @@ class Kyber:
         
         # Generate the error vector s ∈ R^k
         s, N = self._generate_error_vector(sigma, self.eta_1, N)
+        logging.debug(f"error vector s:{s}")
         s.to_ntt()
         
         # Generate the error vector e ∈ R^k
         e, N = self._generate_error_vector(sigma, self.eta_1, N)
+        logging.debug(f"error vector e:{e}")
         e.to_ntt() 
                            
         # Construct the public key
@@ -222,14 +224,17 @@ class Kyber:
         
         # Generate the error vector r ∈ R^k
         r, N = self._generate_error_vector(coins, self.eta_1, N)
+        logging.debug(f"error vector r:{r}")
         r.to_ntt()
         
         # Generate the error vector e1 ∈ R^k
         e1, N = self._generate_error_vector(coins, self.eta_2, N)
+        logging.debug(f"error vector e1:{e1}")
         
         # Generate the error polynomial e2 ∈ R
         input_bytes = self._prf(coins,  bytes([N]), 64*self.eta_2)
         e2 = self.R.cbd(input_bytes, self.eta_2)
+        logging.debug(f"e2:{e2}")
         
         # Module/Polynomial arithmatic 
         u = (At @ r).from_ntt() + e1

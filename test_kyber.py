@@ -1,4 +1,7 @@
 import unittest
+import logging
+logging.basicConfig(level=logging.DEBUG)
+
 import os
 from kyber import Kyber512, Kyber768, Kyber1024
 from aes256_ctr_drbg import AES256_CTR_DRBG
@@ -150,5 +153,13 @@ class TestKnownTestValues(unittest.TestCase):
     def test_kyber1024_known_answer(self):
         return self.generic_test_kyber_known_answer(Kyber1024, "assets/PQCkemKAT_3168.rsp")
 
+def guilly_test_kyber(Kyber):
+    pk, sk = Kyber.keygen()
+    c, key = Kyber.enc(pk)
+    _key = Kyber.dec(c, sk)
+    assert key == _key
+
 if __name__ == '__main__':
-    unittest.main()
+    # unittest.main()
+
+    guilly_test_kyber(Kyber512)
