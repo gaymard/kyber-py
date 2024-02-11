@@ -238,7 +238,7 @@ class Kyber:
         e2 = self.R.cbd(input_bytes, self.eta_2)
         logging.debug(f"e2:{e2}")
         
-        # Module/Polynomial arithmatic 
+        # Module/Polynomial arithmetic 
         u = (At @ r).from_ntt() + e1
         v = (tt @ r)[0][0].from_ntt()
         v = v + e2 + m_poly
