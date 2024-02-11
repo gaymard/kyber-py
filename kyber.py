@@ -177,6 +177,7 @@ class Kyber:
         
         # Generate the matrix A ∈ R^kxk
         A = self._generate_matrix_from_seed(rho, is_ntt=True)
+        logging.debug(f"A: {A}")
         
         # Generate the error vector s ∈ R^k
         s, N = self._generate_error_vector(sigma, self.eta_1, N)
